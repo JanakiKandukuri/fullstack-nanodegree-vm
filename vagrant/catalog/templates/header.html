@@ -1,0 +1,67 @@
+<html>
+
+<head>
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style/main_style.css') }}">
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style/style.css') }}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <script src="//apis.google.com/js/platform.js?onload=start"></script>
+</head>
+
+<body>
+    <div id="common_header">
+        <header>
+            <span class="main_icon">
+                <i class="glyphicon glyphicon-king"></i><span class="main_header">SPORTS INVENTORY</span>
+                <span class="main_login">
+                    <div class="user_info">
+                        <span class="avatar"><img id="avatar_img" src="" alt="User Image"></span>
+                        <span class="user_name"></span>
+                    </div>
+                    <div class="login_div">
+                        <span><a id="setting_gear" href="javascript:void(0)"><i class="glyphicon glyphicon-cog"></i></a></span>
+                        <div class="dropdown-menu settings_menu">
+                            <div id="signinButton" data-state="{{STATE}}">
+                                <span class="g-signin" data-scope="openid profile email" data-clientid="1028815413798-epjf8084se5eoo2f413kak66ehigqi6e.apps.googleusercontent.com"
+                                    data-redirecturi="postmessage" data-accesstype="offline" data-cookiepolicy="single_host_origin"
+                                    data-callback="signInCallback" data-approvalprompt="force">
+                                </span>
+                            </div>
+                            <div id="signOutButton">
+                                <button>
+                                    <div class="log-out_glyph_settings_gear">
+                                        <i class="glyphicon glyphicon-log-out"></i>
+                                    </div>
+                                    <div class="vr_divider">
+
+                                    </div>
+                                    <div class="log-out_settings_gear" id="signOut">
+                                        Log out
+                                    </div>
+
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </span>
+            </span>
+        </header>
+    </div>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+    <script src="/static/scripts/main_script.js"></script>
+</body>
+
+</html>
+
+<!--
+    data-scope: resources we want to access
+    data-clientid: code generated when we registered our app with google
+    data-redirecturi: enables one time use code flow
+    data-accesstype: lets user to access/login even if user is offline or not logged in in google account
+    data-cookiepolicy: determines scope of uri which can acess cookie
+    data-approvalprompt: asks to login each time user visits
+-->

@@ -1,0 +1,41 @@
+<html>
+
+<head>
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style/style.css') }}">
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style/create_new_catalog.css') }}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#header").load("header")
+        });
+    </script>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div id="header"></div>
+        <div class="container-fluid create_form">
+                <form method="POST">
+                    <h1>Create New Catalog</h1>
+                    <input type="text" name="sport_name" />
+                    <input type="submit" value="Create" />
+                </form>
+                <div class="col-xs-4" id="cat_items"></div>
+                <div class="col-xs-4" id="items_types"></div>
+        </div>
+        <footer></footer>
+    </div>
+
+
+
+    <!-- Latest compiled and minified JavaScript -->
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+    <script src="/static/scripts/main_script.js"></script>
+</body>
+
+</html>
