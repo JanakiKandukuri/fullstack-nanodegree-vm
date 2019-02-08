@@ -20,7 +20,7 @@ header {
 .user_Info {
     display: none;
     position: relative;
-    right: 90px;
+    right: 150px;
     font-size: 20px;
     top: -6px;
 }
@@ -40,10 +40,8 @@ header {
 
 .create_new {
     display: none;
-    float: right; 
     position: relative;
     top: 35px;
-    right: -150px;
 }
 
 .main_login {
@@ -54,6 +52,12 @@ header {
 }
 
 .login_div {
+    position: fixed;
+    right: 60px;
+    top: 10px;
+}
+
+.login_div_after_login {
     position: relative;
     right: 60px;
 }
@@ -132,4 +136,8 @@ a {
 
 .label {
     /* color:white; */
+}
+
+#AddItem{
+    display: none;
 }

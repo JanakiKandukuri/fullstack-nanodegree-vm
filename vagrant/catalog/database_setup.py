@@ -60,26 +60,5 @@ class CatalogItem(Base):
         }
 
 
-class CatalogItemType(Base):
-    __tablename__ = 'catalog_item_type'
-    name = Column(String(80), nullable=False)
-    id = Column(Integer, primary_key=True)
-    description = Column(String(250))
-    price = Column(String(8))
-    catalog_item_id = Column(Integer, ForeignKey('catalog_item.id'))
-    catalog_item = relationship(CatalogItem)
-    image = Column(LargeBinary)
-
-    @property
-    def serialize(self):
-        return {
-            'name': self.name,
-            'description': self.description,
-            'id': self.id,
-            'price': self.price,
-            'image': self.image
-        }
-
-
 engine = create_engine('sqlite:///catalog.db')
 Base.metadata.create_all(engine)

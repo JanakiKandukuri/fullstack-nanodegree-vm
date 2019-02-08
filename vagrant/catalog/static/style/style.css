@@ -1,3 +1,20 @@
 body {
     background-color: #d0cdbf !important;
 }
+
+.ml-20{
+    margin-left: 20px;
+}
+
+.button_style {
+    margin-left: 33px;
+    margin-top: 20px;
+}
+
+.button_style button {
+    width: 116px;
+    height: 36px;
+    border: 1px #4688f1 solid;
+    border-radius: 5px;
+    color: #4688f1;
+}

@@ -18,13 +18,37 @@
     <div class="container-fluid">
         <div id="header"></div>
         <div class="container-fluid create_form">
-                <form method="POST">
-                    <h1>Create New Catalog</h1>
-                    <input type="text" name="sport_name" />
-                    <input type="submit" value="Create" />
-                </form>
-                <div class="col-xs-4" id="cat_items"></div>
-                <div class="col-xs-4" id="items_types"></div>
+            <!-- <form method="POST"> -->
+            <h1>Create New Catalog</h1>
+            <input type="text" name="sport_name" class="sport_name" />
+            <input type="submit" value="Create" id="create" />
+            <!-- </form> -->
+            <div class="row" id="cat_items">
+                <div class="row" style="display: inline-flex">
+                    <div class="button_style">
+                        <button>
+                            <div id="AddItem">
+                                Add item
+                            </div>
+
+                        </button>
+                    </div>
+                    <div class="button_style saveall_items">
+                            <button>
+                                <div id="SaveAll">
+                                    Save ALL
+                                </div>
+    
+                            </button>
+                        </div>
+                </div>
+                <div class="row items_form">
+
+                        
+                </div>
+
+            </div>
+            <div class="col-xs-4" id="cat_items"></div>
         </div>
         <footer></footer>
     </div>
@@ -36,6 +60,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
         crossorigin="anonymous"></script>
     <script src="/static/scripts/main_script.js"></script>
+    <script src="/static/scripts/create_new_script.js"></script>
 </body>
 
 </html>
