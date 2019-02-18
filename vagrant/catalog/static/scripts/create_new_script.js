@@ -7,6 +7,10 @@ $('#header #setting_gear').click(function () {
     $('.dropdown-menu').toggle();
 })
 
+$('.newCat_create_btn').click(function() {
+    $('sport_name').prop('disabled', true)
+})
+
 
 /** clicking on settings gear logout button */
 $('#AddItem').click(function () {

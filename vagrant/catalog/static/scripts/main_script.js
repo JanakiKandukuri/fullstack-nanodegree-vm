@@ -1,16 +1,4 @@
 var main_banner = document.getElementById("main_banner");
-var images = ["/static/assets/asset_box.jpg", "/static/assets/asset_climbing.jpg", "/static/assets/asset_golf.jpg",
-    "/static/assets/asset_kayaking.jpg", "/static/assets/asset_soccer.jpg"];
-var login_session;
-// window.onload = function () {
-//     var newNode = document.createElement('img');
-//     setInterval(() => {
-//         var randNum = Math.ceil(Math.random() * 4)
-//         main_banner.childNodes = [];
-//         newNode.setAttribute('src', images[randNum]);
-//         main_banner.appendChild(newNode);
-//     }, 3000)
-// }
 
 $(document).ready(function () {
     if (document.cookie.includes('login_session')) {
@@ -91,7 +79,9 @@ function signInCallback(authResult) {
                 if (result) {
                     login_session = result['UserInfo'][0];
                     document.cookie = "login_session="+JSON.stringify(login_session);
-                    userInfoShowHide(true)
+                    userInfoShowHide(true);
+                    window.location.href = "/user_catalog";
+                    // $('#user_name').html(login_session['name'])
                 } else if (authResult['error']) {
                     console.log("error")
                 } else {
@@ -122,6 +112,26 @@ $('#signOut').click(function () {
         }
     })
 })
+
+
+// $('.create_new_btn').click(function () {
+//     $.ajax({
+//         type: "get",
+//         url: '/catagories/new',
+//         processData: false,
+//         contentType: 'application/octet-stream; charset=utf-8',
+//         success: function (result) {
+//             if (result) {
+//                 console.log("sucess")
+//             } else if (authResult['error']) {
+//                 console.log("error")
+//             } else {
+//                 $('#reuslt').html('failed .....')
+//             }
+//         }
+//     })
+// })
+
 
 
 /** show/ hide when user is logged in */

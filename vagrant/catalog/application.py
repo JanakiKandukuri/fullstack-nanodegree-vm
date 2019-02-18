@@ -150,42 +150,66 @@ def header():
         return render_template('header.html', STATE=state)
 
 
+@app.route('/user_catalog')
+def userCatalog():
+    if('username' in login_session):
+        user_id = getUserID(login_session['email'])
+        user_catalog = session.query(Catalog).filter_by(user_id=user_id).all()
+        all_catalog = session.query(Catalog).all()
+        catalog = {'userCatalog': user_catalog, 'all': all_catalog}
+        return render_template('user_login_catalog.html', catalog=catalog)  
+    else:
+        catalog = session.query(Catalog).all()
+        return render_template('main.html', catalog=catalog)
+
+
 @app.route('/catagories/new', methods=['GET', 'POST'])
 def newCatalogMenu():
     if('username' not in login_session):
         return redirect('/')
     else:
         if (request.method == 'POST'):
-            if (request.data != ''):
+            if (request.form['sport_name'] != ''):
                 user_id = getUserID(login_session['email'])
-                newCat = Catalog(name=request.data, user_id=user_id)
+                newCat = Catalog(name=request.form['sport_name'], user_id=user_id)
                 session.add(newCat)
                 session.commit()
-                catalogAdded = session.query(
-                                Catalog).filter_by(
-                                    name=request.data).all()
+                # catalogAdded = session.query(
+                #                 Catalog).filter_by(
+                #                     name=request.data).all()
                 flash('New Sport added to Catalog')
-                return "added"
+                message = request.form['sport_name']
+                return render_template('new_catalog.html', message=message)
         else:
             catalog = session.query(Catalog).all()
             return render_template('new_catalog.html', catalog=catalog)
 
 
-@app.route('/categories/<int:category_id>/item')
+@app.route('/categories/<int:category_id>/newItem', methods=['GET', 'POST'])
 def catalogMenuItem(category_id):
     catalogItems = session.query(
                     CatalogItem).filter_by(
                         catalog_id=category_id).all()
-    catalog = session.query(Catalog).all()
+    # catalog = session.query(Catalog).all()
     if (request.method == 'POST'):
         if (request.form['name'] != ''):
-            editRes.name = request.form['name']
-            session.add(editRes)
+            # editRes.name = request.form['name']
+            # session.add(editRes)
             session.commit()
             flash('res edited')
         return redirect(url_for('showRestaurants'))
     else:
         return jsonify(CatalogItem=[i.serialize for i in catalogItems])
+
+
+@app.route('/user_catalog/<int:catalog_id>/delete', methods=['POST'])
+def deleteCatalog(catalog_id):
+    deleteCat = session.query(Catalog).filter_by(id=catalog_id).one()
+    if (request.method == 'POST'):
+        session.delete(deleteCat)
+        session.commit()
+        flash('Item deleted')
+        return 'success'
 
 
 # helper functions for users

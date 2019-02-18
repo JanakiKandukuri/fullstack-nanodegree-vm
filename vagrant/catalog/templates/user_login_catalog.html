@@ -1,0 +1,109 @@
+<html>
+<head>
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style/main_style.css') }}">
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style/style.css') }}">
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style/user_login_catalog.css') }}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div id="header"></div>
+        <div class="container-fluid">
+            <div class="contTop">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-10">
+                             <h1>Welcome, <span class="user_name"></span></h1>
+                        </div>
+                    </div>
+                    <div class="row" style="position: relative;top: 14px;">
+                        <ul class="nav nav-tabs" id="tabs">
+                            <li class="nav-item">
+                                <a class="nav-link" id="myList">My List</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="allItems">All Items</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="contInfo">
+                <div class="container-fluid">
+                    <div class="row mt-20">
+                            <a href="{{url_for('newCatalogMenu')}}" class="btn btn-primary create_new_btn"
+                            role="button">Create New</a>
+                    </div>
+                    <div class="row mt-20">
+                        <div class="col-sm-4">
+                            <div class="accessReviw">
+                                {%if catalog.userCatalog|length > 0 %}
+                                <table class="table table-hover" id="user_list_table">
+                                    <thead>
+                                        <tr>
+                                            <th>NAME</th>
+                                            <th class="th-action">ACTION</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for c in catalog.userCatalog %}
+                                        <tr class="detailes">
+                                            <td>
+                                                <a href="javascript:void(0)" class="catalog action-text"
+                                                    data-id="{{c.id}}">{{c.name}}<br></a>
+                                            </td>
+                                            <td class="td-action">
+                                                <i class="glyphicon glyphicon-edit action-glyph"></i><span class="ml-10 action-text">EDIT</span>
+                                                <span class="delete_catalog"><i class="glyphicon glyphicon-remove action-glyph ml-10"></i><span class="ml-10 action-text">REMOVE</span></span>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                                {% endif %}
+                                <table class="table table-hover" id="all_list_table">
+                                    <thead>
+                                        <tr>
+                                            <th>NAME</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for c in catalog.all %}
+                                        <tr class="detailes">
+                                            <td>
+                                                <a href="javascript:void(0)" class="catalog action-text"
+                                                    data-id="{{c.id}}">{{c.name}}<br></a>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer></footer>
+    </div>
+
+
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+    <script src="/static/scripts/main_script.js"></script>
+    <script src="/static/scripts/user_login_script.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#header").load("header")
+        });
+    </script>
+</body>
+
+</html>
