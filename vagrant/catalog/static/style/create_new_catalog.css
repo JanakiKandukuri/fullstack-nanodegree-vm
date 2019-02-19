@@ -1,5 +1,5 @@
 .create_form {
-
+    margin-top: 30px;
 }
 
 .items_form {
@@ -27,4 +27,16 @@
 
 .login_home_btn {
     margin-top: 15px;
+}
+
+.nmt-15 {
+    margin-top: -15px
+}
+
+.nml-124 {
+    margin-left: -124px;
+}
+
+.mt-32 {
+    margin-top: 32px;
 }

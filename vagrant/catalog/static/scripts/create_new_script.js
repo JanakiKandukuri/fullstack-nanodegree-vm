@@ -13,9 +13,10 @@ $('.newCat_create_btn').click(function() {
 
 
 /** clicking on settings gear logout button */
-$('#AddItem').click(function () {
+$('.newCat_Add_btn').click(function () {
     $('.saveall_items').show()
-    newChild = '<input type="text" name="sport_name" class="'+(countItems++)+'"'+'/><a href="javascript:void(0)" class="removeCatalogItem">X<br></a>';
+    newChild = '<div class="sport_item"><label class="input_label">Equipment Name:</label><input type="text" name="equipment_name" class="equipment_name" /><label class="input_label">Description:</label><input type="text" name="description" class="description" /><a href="javascript:void(0)" class="removeCatalogItem">X<br></a></div>'
+    // newChild = '<input type="text" name="sport_name" class="'+(countItems++)+'"'+'/><a href="javascript:void(0)" class="removeCatalogItem">X<br></a>';
     $('.items_form').append(newChild)
     // $.ajax({
     //     type: "get",

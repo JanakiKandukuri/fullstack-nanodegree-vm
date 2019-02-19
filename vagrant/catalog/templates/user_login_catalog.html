@@ -56,8 +56,8 @@
                                                     data-id="{{c.id}}">{{c.name}}<br></a>
                                             </td>
                                             <td class="td-action">
-                                                <i class="glyphicon glyphicon-edit action-glyph"></i><span class="ml-10 action-text">EDIT</span>
-                                                <span class="delete_catalog"><i class="glyphicon glyphicon-remove action-glyph ml-10"></i><span class="ml-10 action-text">REMOVE</span></span>
+                                                <i class="glyphicon glyphicon-edit action-glyph" data-id="{{c.id}}"></i><span class="ml-10 action-text">EDIT</span>
+                                                <span class="delete_catalog" data-id="{{c.id}}"><i class="glyphicon glyphicon-remove action-glyph ml-10"></i><span class="ml-10 action-text">REMOVE</span></span>
                                             </td>
                                         </tr>
                                         {% endfor %}
