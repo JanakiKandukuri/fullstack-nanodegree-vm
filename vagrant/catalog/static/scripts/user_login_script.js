@@ -16,18 +16,30 @@ $(document).ready(function () {
 
 
     $('.delete_catalog').click(function () {
-
         var id = $(this).data("id");
         $.ajax({
             url: "/user_catalog/" + id + "/delete",
             type: "post",
             success: function (response) {
-                window.location.href="user_catalog"
+                window.location.href = "user_catalog"
 
             },
             error: function (xhr) {
                 console.log(xhr)
-                //Do Something to handle error
+            }
+        });
+    })
+
+    $('.edit_catalog').click(function () {
+        var id = $(this).data("id");
+        $.ajax({
+            url: "/user_catalog/" + id + "/edit",
+            type: "get",
+            success: function (response) {
+               console.log(response)
+            },
+            error: function (xhr) {
+                console.log(xhr)
             }
         });
     })

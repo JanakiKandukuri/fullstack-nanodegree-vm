@@ -22,54 +22,49 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-sm-1">
-                            <a href="{{url_for('userCatalog')}}" class="btn btn-primary login_home_btn" role="button">Home</a>
-                    </div>   
+                        <a href="{{url_for('userCatalog')}}" class="btn btn-primary login_home_btn"
+                            role="button">Home</a>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-10">
-                        {% if message %}
-                        <h1>New Catalog Created,</h1>
-                        {% else %}
-                        <h1>Create New Catalog,</h1>
-                        {% endif %}
+                        <h1>Edit Catalog</h1>
                     </div>
                 </div>
             </div>
         </div>
         <div class="container-fluid create_form">
-             {% if message %}
+            {% if catalog_edit %}
             <div class="row">
                 <form>
                     <label class="input_label">Sport Name:</label>
-                    <input type="text" name="sport_name" class="sport_name" id=" sport_name" data-id="{{message.id}}"  value="{{message.name}}" disabled />
-                    <input type="submit" class="btn btn-primary newCat_create_btn" value="Create" disabled />
+                    <input type="text" name="sport_name" class="sport_name" id=" sport_name"
+                        data-id="{{catalog_edit.catalog.id}}" value="{{catalog_edit.catalog.name}}" />
                 </form>
             </div>
-            {% else %}
-            <div class="row">
-                <form action="{{url_for('newCatalogMenu')}}" method="POST">
-                        <label class="input_label">Sport Name:</label>
-                    <input type="text" name="sport_name" class="sport_name" />
-                    <input type="submit" class="btn btn-primary newCat_create_btn" value="Create" />
-                </form>
-            </div>
-            {% endif %}
             <div class="row" id="cat_items">
                 <div class="row" style="display: inline-flex">
-                    {% if message %}
                     <div class="button_style add_btn">
                         <input type="button" class="btn btn-primary newCat_Add_btn" value="Add New" />
                     </div>
-                    {% endif %}
-                    <div class="button_style saveall_items">
-                        <input type="button" class="btn btn-primary newCat_saveall_items"  value="Save All" />
+                    <div class="button_style edit_catalog">
+                        <input type="button" class="btn btn-primary newCat_saveall_items" value="Save All" />
                     </div>
                 </div>
                 <div class="row items_form">
+                    {% for c in catalog_edit.catalogItems %}
+                    <div class="sport_item">
+                        <label class="input_label">Equipment Name:</label><input type="text" name="equipment_name"
+                            class="equipment_name ml-10" value="{{c.name}}"/>
+                        <label class="input_label ml-10">Description:</label>
+                        <textarea name="description" rows="2" cols="20" class="description ml-10" value="{{c.description}}"></textarea>
+                        <a href="javascript:void(0)" class="removeCatalogItem">X<br></a></div>
+                    {% endfor %}
                 </div>
 
             </div>
-            <div class="col-xs-4" id="cat_items"></div>
+            {% endif %}
+
         </div>
         <footer></footer>
     </div>

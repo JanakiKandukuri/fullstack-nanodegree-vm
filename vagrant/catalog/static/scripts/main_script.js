@@ -113,27 +113,6 @@ $('#signOut').click(function () {
     })
 })
 
-
-// $('.create_new_btn').click(function () {
-//     $.ajax({
-//         type: "get",
-//         url: '/catagories/new',
-//         processData: false,
-//         contentType: 'application/octet-stream; charset=utf-8',
-//         success: function (result) {
-//             if (result) {
-//                 console.log("sucess")
-//             } else if (authResult['error']) {
-//                 console.log("error")
-//             } else {
-//                 $('#reuslt').html('failed .....')
-//             }
-//         }
-//     })
-// })
-
-
-
 /** show/ hide when user is logged in */
 function userInfoShowHide(show) {
     if (show) {

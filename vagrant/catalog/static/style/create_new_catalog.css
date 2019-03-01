@@ -18,6 +18,7 @@
     display: none;
 }
 
+
 .newCat_create_btn {
     margin-left: 10px;
     height: 26px;
@@ -39,4 +40,8 @@
 
 .mt-32 {
     margin-top: 32px;
+}
+
+.ml-10 {
+    margin-left: 10px;
 }

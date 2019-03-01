@@ -67,3 +67,12 @@
 .delete_catalog {
     cursor: pointer
 }
+
+.edit_catalog {
+    cursor: pointer
+}
+
+.description {
+    position: relative;
+    top: 16px;
+}

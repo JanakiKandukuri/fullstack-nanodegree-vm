@@ -135,7 +135,8 @@ def catalogMenu():
 
 @app.route('/header')
 @app.route('/catagories/header')
-def header():
+@app.route('/user_catalog/<int:catalog_id>/header')
+def header(catalog_id):
     if('username' in login_session):
         user_id = getUserID(login_session['email'])
         catalog = session.query(Catalog).filter_by(user_id=user_id).all()
@@ -173,33 +174,31 @@ def newCatalogMenu():
                 user_id = getUserID(login_session['email'])
                 newCat = Catalog(name=request.form['sport_name'], user_id=user_id)
                 session.add(newCat)
-                session.commit()
-                # catalogAdded = session.query(
-                #                 Catalog).filter_by(
-                #                     name=request.data).all()
+                session.flush()
+                session.refresh(newCat)
                 flash('New Sport added to Catalog')
-                message = request.form['sport_name']
+                message = {"name": request.form['sport_name'], "id": newCat.id}
                 return render_template('new_catalog.html', message=message)
         else:
             catalog = session.query(Catalog).all()
             return render_template('new_catalog.html', catalog=catalog)
 
 
-@app.route('/categories/<int:category_id>/newItem', methods=['GET', 'POST'])
-def catalogMenuItem(category_id):
+@app.route('/user_catalog/<int:catalog_id>/newItem', methods=['POST'])
+def newCatalogMenuItem(catalog_id):
     catalogItems = session.query(
                     CatalogItem).filter_by(
-                        catalog_id=category_id).all()
-    # catalog = session.query(Catalog).all()
+                        catalog_id=catalog_id).all()
     if (request.method == 'POST'):
-        if (request.form['name'] != ''):
-            # editRes.name = request.form['name']
-            # session.add(editRes)
-            session.commit()
-            flash('res edited')
-        return redirect(url_for('showRestaurants'))
-    else:
-        return jsonify(CatalogItem=[i.serialize for i in catalogItems])
+        items = json.loads(request.data)
+        if(items):
+            user_id = getUserID(login_session['email'])
+            for item in items:
+                newItems = CatalogItem(name=item[0], description=item[1],
+                                       user_id=user_id, catalog_id=catalog_id)
+                session.add(newItems)
+                session.commit()
+                return '/user_catalog'
 
 
 @app.route('/user_catalog/<int:catalog_id>/delete', methods=['POST'])
@@ -210,6 +209,17 @@ def deleteCatalog(catalog_id):
         session.commit()
         flash('Item deleted')
         return 'success'
+
+
+@app.route('/user_catalog/<int:catalog_id>/edit', methods=['GET','POST'])
+def editCatalog(catalog_id):
+    catalog = session.query(Catalog).filter_by(id=catalog_id).one()
+    catalogItems = session.query(
+                    CatalogItem).filter_by(
+                        catalog_id=catalog_id).all()
+    edit = {'catalog': catalog, 'catalogItems': catalogItems}
+    if (request.method == 'GET'):
+        return render_template('user_catalog_edit.html', catalog_edit=edit) 
 
 
 # helper functions for users

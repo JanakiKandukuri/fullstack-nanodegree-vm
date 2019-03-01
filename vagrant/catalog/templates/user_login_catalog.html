@@ -1,4 +1,4 @@
-<html>
+             <html>
 <head>
     <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style/main_style.css') }}">
     <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style/style.css') }}">
@@ -56,7 +56,14 @@
                                                     data-id="{{c.id}}">{{c.name}}<br></a>
                                             </td>
                                             <td class="td-action">
-                                                <i class="glyphicon glyphicon-edit action-glyph" data-id="{{c.id}}"></i><span class="ml-10 action-text">EDIT</span>
+                                                <!-- <span class="edit_catalog" data-id="{{c.id}}">
+                                                    <i class="glyphicon glyphicon-edit action-glyph"></i>
+                                                    <span class="ml-10 action-text">EDIT</span>
+                                                </span> -->
+                                                <span class="edit_catalog" data-id="{{c.id}}">
+                                                        <i class="glyphicon glyphicon-edit action-glyph"></i>
+                                                        <a href="{{url_for('editCatalog', catalog_id=c.id)}}" class="ml-10 action-text">EDIT</a>
+                                                    </span>
                                                 <span class="delete_catalog" data-id="{{c.id}}"><i class="glyphicon glyphicon-remove action-glyph ml-10"></i><span class="ml-10 action-text">REMOVE</span></span>
                                             </td>
                                         </tr>
@@ -82,6 +89,12 @@
                                     </tbody>
                                 </table>
                             </div>
+                        </div>
+
+                        <div class="col-sm-8 edit_section">
+                            {% if catalog_edit %}
+                                <h1>will show</h1>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
