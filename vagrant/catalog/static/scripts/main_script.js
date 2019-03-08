@@ -1,12 +1,10 @@
-var main_banner = document.getElementById("main_banner");
-
 $(document).ready(function () {
-    if (document.cookie.includes('login_session')) {
-        login_session = JSON.parse(document.cookie.split("=")[1])
-        userInfoShowHide(true)
-    } else {
-        userInfoShowHide(false)
-    }
+
+    /** clicking on settings gear/login a tag in container */
+    $('#setting_gear').on('click', function () {
+        $('.dropdown-menu').toggle();
+    })
+
     /** clicking on catalog a tag in container */
     $('.catalog').click(function () {
         var id = $(this).data("id");
@@ -59,38 +57,39 @@ $(document).ready(function () {
 
 });
 
-/** clicking on settings gear/login a tag in container */
-$('#header #setting_gear').click(function () {
-    console.log("here")
-    $('.dropdown-menu').toggle();
-})
 
-function signInCallback(authResult) {
-    if (authResult['code']) {
-        var STATE = $('#signinButton').data('state');
-        $('.dropdown-menu').toggle();
-        $.ajax({
-            type: "post",
-            url: '/gconnect?state=' + STATE,
-            processData: false,
-            data: authResult['code'],
-            contentType: 'application/octet-stream; charset=utf-8',
-            success: function (result) {
-                if (result) {
-                    login_session = result['UserInfo'][0];
-                    document.cookie = "login_session="+JSON.stringify(login_session);
-                    userInfoShowHide(true);
-                    window.location.href = "/user_catalog";
-                    // $('#user_name').html(login_session['name'])
-                } else if (authResult['error']) {
-                    console.log("error")
-                } else {
-                    $('#reuslt').html('failed .....')
-                }
-            }
-        })
-    }
-}
+
+
+// function signInCallback(authResult) {
+
+    
+//     if (authResult['code']) {
+//         var STATE = $('#signinButton').data('state');
+//         console.log(STATE)
+//         $('.dropdown-menu').toggle();
+//         $.ajax({
+//             type: "post",
+//             url: '/gconnect?state=' + STATE,
+//             processData: false,
+//             data: authResult['code'],
+//             contentType: 'application/octet-stream; charset=utf-8',
+//             success: function (result) {
+//                 if (result) {
+//                     console.log(result)
+//                     login_session = result['UserInfo'][0];
+//                     document.cookie = "login_session=" + JSON.stringify(login_session);
+//                     userInfoShowHide(true);
+//                     window.location.href = "/user_catalog";
+//                     // $('#user_name').html(login_session['name'])
+//                 } else if (authResult['error']) {
+//                     console.log("error")
+//                 } else {
+//                     $('#reuslt').html('failed .....')
+//                 }
+//             }
+//         })
+//     }
+// }
 
 /** clicking on settings gear logout button */
 $('#signOut').click(function () {
@@ -131,8 +130,19 @@ function userInfoShowHide(show) {
         $('.avatar').hide();
         $('#signinButton').show();
         $('.create_new').hide();
-        $('.dropdown-menu').hide();
+        $('#settings_menu').hide();
     }
 
 }
+
+
+// function onSignIn(googleUser) {
+//     console.log("here")
+//     var profile = googleUser.getBasicProfile();
+//     console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+//     console.log('Name: ' + profile.getName());
+//     console.log('Image URL: ' + profile.getImageUrl());
+//     console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+//   }
+
 

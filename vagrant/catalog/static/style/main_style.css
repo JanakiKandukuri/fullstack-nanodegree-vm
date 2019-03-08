@@ -78,7 +78,8 @@ header {
     color: white
 }
 
-.settings_menu {
+
+#header .dropdown-menu {
     left: -70px !important;
 }
 

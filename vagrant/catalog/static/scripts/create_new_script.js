@@ -1,6 +1,6 @@
 /** clicking on settings gear/login a tag in container */
-$('#header #setting_gear').click(function () {
-    $('.dropdown-menu').toggle();
+$('#setting_gear').click(function () {
+    $('#settings_menu').toggle();
 })
 
 
@@ -13,7 +13,7 @@ $('.newCat_create_btn').click(function () {
 /** ********************** ON ADD BUTTON CLICK ENABLE SAVEALL AND FORM FOR EQUIPMENTS **************** */
 $('.newCat_Add_btn').click(function () {
     $('.saveall_items').show()
-    newChild = '<div class="sport_item"><label class="input_label">Equipment Name:</label><input type="text" name="equipment_name" class="equipment_name ml-10" /><label class="input_label ml-10">Description:</label><input type="text" name="description" class="description ml-10" /><a href="javascript:void(0)" class="removeCatalogItem">X<br></a></div>'
+    newChild = '<div class="sport_item"><label class="input_label">Equipment Name:</label><input type="text" name="equipment_name" class="equipment_name ml-10" /><label class="input_label ml-10">Description:</label><textarea name="description" rows="2" cols="20" class="description ml-10" value="{{c.description}}"></textarea><a href="javascript:void(0)" class="removeCatalogItem">X<br></a></div>'
     $('.items_form').append(newChild)
 })
 
@@ -73,7 +73,7 @@ function userInfoShowHide(show) {
         $('.avatar').hide();
         $('#signinButton').show();
         $('.create_new').hide();
-        $('.dropdown-menu').hide();
+        $('#settings-menu').hide();
     }
 
 }

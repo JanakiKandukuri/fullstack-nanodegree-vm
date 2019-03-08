@@ -1,63 +1,104 @@
+<!doctype html>
 <html>
 
 <head>
+    <title>CATALOG</title>
+    <meta name="google-signin-client_id"
+        content="1028815413798-feromut3dh5f9fi7s5i2g9e69dkjj8mq.apps.googleusercontent.com">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/style.css') }}">
     <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style/main_style.css') }}">
-    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style/style.css') }}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
         integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="//apis.google.com/js/platform.js?onload=start"></script>
-    <script>
-        $(document).ready(function () {
-            $("#header").load("header")
-        });
-    </script>
-</head>
-
-<body>
-    <div class="container-fluid">
-        <div id="header"></div>
-        <div class="container-fluid mid-container">
-            <div class="container-fluid">
-                <div class="row">
-
-                    <div class="create_new">
-                        <a href="{{url_for('newCatalogMenu')}}" class="btn btn-primary create_new_btn"
-                            role="button">Create New</a>
-                    </div>
-                </div>
-                <div class="row catalog-list">
-                    <div class="col-xs-12">
-                        {% for c in catalog %}
-                        <div class="row">
-                            <div class="create_nav">
-                                    <a href="javascript:void(0)" class="catalog" data-id="{{c.id}}">{{c.name}}<br></a>
-                            </div>
-                            <!--  -->
-                        </div>
-                        {% endfor %}
-                    </div>
-
-
-                    <div class="col-xs-4" id="cat_items"></div>
-                    <div class="col-xs-4" id="items_types"></div>
-                </div>
-
-
-            </div>
-        </div>
-        <footer></footer>
-    </div>
-
-
-
-    <!-- Latest compiled and minified JavaScript -->
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
         integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
         crossorigin="anonymous"></script>
+    <script src="https://apis.google.com/js/client:platform.js?onload=start" async defer></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script>
+        function start() {
+            gapi.load('auth2', function () {
+                auth2 = gapi.auth2.init({
+                    client_id: '121060193168-0bhe2col9k2lntcg2dauo2snl3o4c2gh.apps.googleusercontent.com'
+                });
+            });
+        }
+    </script>
+
+</head>
+
+<body>
+    <div id="header">
+        <header>
+            <span class="main_icon">
+                <i class="glyphicon glyphicon-king"></i><span class="main_header">SPORTS INVENTORY</span>
+                <span class="main_login">
+                    <div class="user_info">
+                        <span class="avatar"><img id="avatar_img" src="" alt="User Image"></span>
+                        <span class="user_name"></span>
+                    </div>
+                    <div class="login_div">
+                        <span><a id="setting_gear" href="javascript:void(0)"><i
+                                    class="glyphicon glyphicon-cog"></i></a></span>
+                        <div class="dropdown-menu">
+                            <button id="signinButton" class="btn btn-primary">Google Signin</button>
+                            <div id="signOutButton">
+                                <button>
+                                    <div class="log-out_glyph_settings_gear">
+                                        <i class="glyphicon glyphicon-log-out"></i>
+                                    </div>
+                                    <div class="vr_divider">
+
+                                    </div>
+                                    <div class="log-out_settings_gear" id="signOut">
+                                        Log out
+                                    </div>
+
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </span>
+            </span>
+        </header>
+    </div>
+    <div id="content">{% block content %}{% endblock %}</div>
     <script src="/static/scripts/main_script.js"></script>
+    <script>
+        $('#signinButton').click(function () {
+            function signInCallback(authResult) {
+                if (authResult['code']) {
+                    $('.dropdown-menu').toggle();
+                    $.ajax({
+                        type: 'POST',
+                        url: '/gconnect?state={{STATE}}',
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest'
+                        },
+                        contentType: 'application/octet-stream; charset=utf-8',
+                        success: function (result) {
+                            login_session = result['UserInfo'][0];
+                            document.cookie = "login_session=" + JSON.stringify(login_session);
+                            userInfoShowHide(true);
+                            window.location.href = "/user_catalog";
+                            // $('#result').html('Login Successful!</br>'+ result + '</br>Redirecting...')
+                            //      setTimeout(function() {
+                            //       window.location.href = "/";
+                            //      }, 2000);
+                        },
+                        processData: false,
+                        data: authResult['code']
+                    });
+                } else {
+                    // handle error
+                    console.log('There was an error: ' + authResult['error']);
+                    $('#result').html('Failed to make a server-side call. Check your configuration and console.');
+                }
+            }
+            auth2.grantOfflineAccess().then(signInCallback);
+        });
+    </script>
 </body>
 
 </html>
