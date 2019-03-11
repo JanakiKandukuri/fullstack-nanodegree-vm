@@ -1,7 +1,6 @@
 <html>
 
 <head>
-    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style/main_style.css') }}">
     <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style/style.css') }}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
         integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -24,21 +23,26 @@
         <div class="container-fluid mid-container">
             <div class="container-fluid">
                 <div class="row catalog-list">
-                    <div class="col-xs-12">
+                    {% if catalog %}
+                    <div class="col-xs-4">
                         {% for c in catalog %}
-                        <div class="row">
+                        <div class="row mb-10">
                             <div class="create_nav">
                                 <a href="javascript:void(0)" class="catalog" data-id="{{c.id}}">{{c.name}}<br></a>
+                                
                             </div>
                         </div>
                         {% endfor %}
                     </div>
-                    <div class="col-xs-4" id="cat_items"></div>
+                    <div class="col-xs-8" id="cat_items"></div> 
+                    {% endif %}
+                    
                 </div>
             </div>
         </div>
         {% endblock %}
     </div>
+    
     <script src="/static/scripts/main_script.js"></script>
 </body>
 

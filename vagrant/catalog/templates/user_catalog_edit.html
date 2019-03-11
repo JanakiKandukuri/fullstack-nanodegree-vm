@@ -2,8 +2,6 @@
 
 <head>
     <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style/style.css') }}">
-    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style/user_login_catalog.css') }}">
-    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style/create_new_catalog.css') }}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
         integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
@@ -12,12 +10,13 @@
 
 <body>
     <div class="container-fluid">
-            {% include "header.html" %}
+        {% extends "main.html" %}
+        {% block content %} 
         <div class="contTop">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-sm-1">
-                        <a href="{{url_for('userCatalog')}}" class="btn btn-primary login_home_btn"
+                        <a href="{{url_for('userCatalog', user_id=catalog_edit.user_id)}}" class="btn btn-primary login_home_btn"
                             role="button">Home</a>
                     </div>
                 </div>
@@ -56,11 +55,11 @@
                         <a href="javascript:void(0)" class="removeCatalogItem">X<br></a></div>
                     {% endfor %}
                 </div>
-
             </div>
             {% endif %}
 
         </div>
+        {% endblock %}
         <footer></footer>
     </div>
 
@@ -72,7 +71,6 @@
         integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
         crossorigin="anonymous"></script>
     <script src="/static/scripts/main_script.js"></script>
-    <script src="/static/scripts/create_new_script.js"></script>
 </body>
 
 </html>
