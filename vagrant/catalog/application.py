@@ -217,6 +217,16 @@ def editCatalog(user_id, catalog_id):
         return render_template('user_catalog_edit.html', catalog_edit=edit)
 
 
+@app.route('/categories/user/<int:user_id>/category/<int:catalog_id>/delete',
+           methods=['POST'])
+def deleteCatalog(user_id, catalog_id):
+    deleteCat = session.query(Catalog).filter_by(id=catalog_id).one()
+    if (request.method == 'POST'):
+        session.delete(deleteCat)
+        session.commit()
+        return redirect(url_for('userCatalog',user_id=user_id))
+
+
 # helper functions for users
 def createUser(login_session):
     newUser = UserInfo(name=login_session['username'],

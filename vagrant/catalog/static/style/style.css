@@ -349,3 +349,30 @@ a {
     position: relative;
     top: 16px;
 }
+
+.modal-backdrop{
+    opacity:0; 
+    transition:opacity .2s;
+  }
+  .modal-backdrop.in{
+    opacity:.7 !important;
+  }
+
+#exampleModal  {
+    opacity: 1;
+    position: absolute;
+    top: 150px;
+    background-color: transparent;
+}
+
+.mt-0 {
+    margin-top: 0px !important;
+}
+
+.mb-25 {
+    margin-bottom: 25px !important;
+}
+
+label {
+    font-size: 14px;
+}

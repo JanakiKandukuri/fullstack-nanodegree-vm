@@ -21,6 +21,8 @@
 
 }
 
+var user_id;
+
 
 $(document).ready(function () {
     /** **DOCUMENT READY ACTIONS ** */
@@ -66,6 +68,7 @@ $('#signinButton').click(function () {
                 contentType: 'application/octet-stream; charset=utf-8',
                 success: function (result) {
                     login_session = result['UserInfo'][0];
+                    this.user_id = login_session['id']
                     document.cookie = "login_session=" + JSON.stringify(login_session);
                     window.location.href = '/categories/user/'+login_session['id']
                     userInfoShowHide(true);
@@ -134,18 +137,23 @@ $('#allItems').click(function () {
 
 /** **METHOD: DELETE CATALOG BUTTON CLICK
  * **DESC: IN USERS MAIN PAGE, CLICK DELTE OR 'X' BTN TO DELETE AN ENTRY FROM LIST OF CATALOG */
-$('.delete_catalog').click(function () {
+$('.delete_catalog').click(function () { 
     var id = $(this).data("id");
-    $.ajax({
-        url: "/user_catalog/" + id + "/delete",
-        type: "post",
-        success: function (response) {
-            window.location.href = "user_catalog"
-
-        },
-        error: function (xhr) {
-            console.log(xhr)
-        }
+    var name = $(this).data("name");
+    var user_id = $(this).data("user_id");
+    $('.modal-body').html("Are you sure to delete catalog "+(name));
+    $('.save').click(function(){
+        $.ajax({
+            url: "/categories/user/" + user_id + "/category/"+ id+"/delete",
+            type: "post",
+            success: function (response) {
+                window.location.href = "/categories/user/"+user_id;
+    
+            },
+            error: function (xhr) {
+                console.log(xhr)
+            }
+        });
     });
 })
 
@@ -265,7 +273,8 @@ $('.newCat_saveall_items').click(function () {
             }
         }
     })
-})
+});
+
 
 
 
