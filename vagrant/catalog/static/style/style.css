@@ -239,24 +239,31 @@ a {
     display: none;
 }
 
-.create_nav {
-    /* background-color: #e3f2fd !important; */
-    /* height: 45px;
-    border-radius: 10px;
-    padding: 7px 10px 5px 25px;
-    text-decoration: none;
-    cursor: pointer;
-    margin-bottom: 10px; */
-}
 
 .create_nav a {
     text-decoration: none;
     color: gray;
+    text-transform: capitalize;
+    font-size: 26px;
 }
 
-.create_nav a:active {
-    text-decoration: underline;
+.catalog-active {
+    text-decoration: underline !important;
+    color: rgb(151, 6, 6) !important;
+    text-transform: capitalize;
+    font-size: 26px;
 }
+
+#cat_items .item {
+     text-transform: capitalize;
+}
+
+#cat_items .description {
+    font-size: 14px;
+    margin-left: 20px;
+    margin-top: -15px;
+}
+
 
 .mb-10 {
     margin-bottom: 10px;

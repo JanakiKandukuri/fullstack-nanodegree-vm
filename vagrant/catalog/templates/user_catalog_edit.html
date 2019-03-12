@@ -41,9 +41,6 @@
                     <div class="button_style add_btn">
                         <input type="button" class="btn btn-primary newCat_Add_btn" value="Add New" />
                     </div>
-                    <div class="button_style edit_catalog">
-                        <input type="button" class="btn btn-primary newCat_saveall_items" value="Save All" />
-                    </div>
                 </div>
                 <div class="row items_form">
                     {% for c in catalog_edit.catalogItems %}
@@ -54,6 +51,8 @@
                         <textarea name="description" rows="2" cols="20" class="description ml-10" value="{{c.description}}"></textarea>
                         <a href="javascript:void(0)" class="removeCatalogItem">X<br></a></div>
                     {% endfor %}
+                </div><div class="button_style edit_catalog">
+                    <input type="button" class="btn btn-primary newCat_saveall_items" value="Save" />
                 </div>
             </div>
             {% endif %}

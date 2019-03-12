@@ -176,8 +176,10 @@ $('.edit_catalog').click(function () {
 /** clicking on catalog a tag in container */
 $('.catalog').click(function () {
     var id = $(this).data("id");
-    console.log(id);
-    $("#items_types").html("")
+    $("#cat_items").html("");
+    var cats = $('.catalog');
+    $(this).addClass('catalog-active');
+    $(".catalog").not($(this)).removeClass('catalog-active');
     $.ajax({
         url: "/categories/" + id,
         type: "get",
@@ -185,9 +187,9 @@ $('.catalog').click(function () {
             console.log(response)
             var str = "<ul>";
             for (var i = 0; i < response.CatalogItem.length; i++) {
-                str += "<li><a href='javascript:void(0)' data-item_id=" + response.CatalogItem[i].id + " data-id=" + id +
+                str += "<li><h2 data-item_id=" + response.CatalogItem[i].id + " data-id=" + id +
                     " class='item'>" + response.CatalogItem[i].name +
-                    "</a>" + "<div>" + response.CatalogItem[i].description + "</div>"
+                    "</h2>" + "<div class='description'>" + response.CatalogItem[i].description + "</div>"
             }
             str += "</ul>";
             $("#cat_items").html(str);
@@ -195,30 +197,6 @@ $('.catalog').click(function () {
         error: function (xhr) {
             console.log(xhr)
             //Do Something to handle error
-        }
-    });
-});
-
-/** clicking on sub item a tag in container */
-$(document).on('click', 'a.item', function () {
-    var id = $(this).data("id");
-    var item_id = $(this).data("item_id");
-    console.log(id);
-    $.ajax({
-        url: "/categories/" + id + "/" + item_id + "/type",
-        type: "get",
-        success: function (response) {
-            console.log(response)
-            var str = "<ul>";
-            for (var i = 0; i < response.CatalogItemType.length; i++) {
-                str += "<li><div >" + response.CatalogItemType[i].name +
-                    "</div>" + "<div > " + response.CatalogItemType[i].description + "</div>"
-            }
-            str += "</ul>";
-            $("#items_types").html(str);
-        },
-        error: function (xhr) {
-            console.log(xhr)
         }
     });
 });
