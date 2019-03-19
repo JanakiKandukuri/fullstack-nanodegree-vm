@@ -26,6 +26,7 @@ var user_id;
 
 $(document).ready(function () {
     /** **DOCUMENT READY ACTIONS ** */
+  $('.loading-container').hide();
     $('#myList').addClass('active');
     console.log(document.cookie)
     var cookie = document.cookie.split(";");
@@ -64,7 +65,9 @@ $('#signinButton').click(function () {
         var STATE = $('#signinButton').data('state')
         if (authResult['code']) {
             $.ajax({
-                type: 'POST',
+                processData: false,
+                data: authResult['code']
+                type: 'post',
                 url: '/gconnect?state=' + STATE,
                 headers: {
                     'X-Requested-With': 'XMLHttpRequest'
@@ -77,8 +80,7 @@ $('#signinButton').click(function () {
                     document.cookie = "login_session=" + JSON.stringify(login_session);
                     window.location.href = '/categories/user/'+login_session['id']
                 },
-                processData: false,
-                data: authResult['code']
+                
             });
         } else {
             // handle error
