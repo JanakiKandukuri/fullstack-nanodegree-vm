@@ -53,8 +53,7 @@
                                         {% for c in catalog.userCatalog %}
                                         <tr class="detailes">
                                             <td>
-                                                <a href="javascript:void(0)" class="catalog action-text"
-                                                    data-id="{{c.id}}">{{c.name}}<br></a>
+                                                <h5 class="catalog action-text" data-id="{{c.id}}">{{c.name}}<br></h5>
                                             </td>
                                             <td class="td-action">
                                                 <span class="edit_catalog" data-id="{{c.id}}">
@@ -62,10 +61,12 @@
                                                     <a href="{{url_for('editCatalog', user_id=catalog.user_id, catalog_id=c.id)}}"
                                                         class="ml-10 action-text">EDIT</a>
                                                 </span>
-                                                <span class="delete_catalog" data-id="{{c.id}}" data-user_id="{{catalog.user_id}}" data-name="{{c.name}}">
+                                                <span class="delete_catalog" data-id="{{c.id}}"
+                                                    data-user_id="{{catalog.user_id}}" data-name="{{c.name}}">
                                                     <i class="glyphicon glyphicon-remove action-glyph ml-10"></i><span
-                                                        class="ml-10 action-text" data-toggle="modal" data-target="#exampleModal">REMOVE</span></span>
-                                                        
+                                                        class="ml-10 action-text" data-toggle="modal"
+                                                        data-target="#exampleModal">REMOVE</span></span>
+
                                             </td>
                                         </tr>
                                         {% endfor %}
@@ -82,8 +83,7 @@
                                         {% for c in catalog.all %}
                                         <tr class="detailes">
                                             <td>
-                                                <a href="javascript:void(0)" class="catalog action-text"
-                                                    data-id="{{c.id}}">{{c.name}}<br></a>
+                                                <h5 class="catalog action-text" data-id="{{c.id}}">{{c.name}}<br></h5>
                                             </td>
                                         </tr>
                                         {% endfor %}
@@ -105,7 +105,7 @@
         <footer></footer>
     </div>
 
-    
+
 
 
     <!-- Latest compiled and minified JavaScript -->
