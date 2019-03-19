@@ -27,17 +27,22 @@ var user_id;
 $(document).ready(function () {
     /** **DOCUMENT READY ACTIONS ** */
     $('#myList').addClass('active');
-    if(document.cookie.includes('login_session')) {
-        var cookieLogin = document.cookie.split(";")[2];
-        var login_session = (JSON.parse(cookieLogin.split("=")[1]))
+    console.log(document.cookie)
+    var cookie = document.cookie.split(";");
+    var login_obj = cookie.filter(function(c){
+       return c && c.includes("login_session") ? c : null
+    })
+    if(login_obj && login_obj[0]) {
+        var obj = JSON.parse(login_obj[0].split("=")[1])
         $('.user_info').show();
         $('#signOutButton').show();
         $('#signinButton').hide();
-        $('.user_name').html(login_session['name']);
+        console.log(obj)
+        $('.user_name').html(obj['name']);
         $('.create_new').show();
-        if (login_session['picture']) {
+        if (obj['picture']) {
             $('.avatar').show();
-            $('#avatar_img').attr('src', login_session['picture']);
+            $('#avatar_img').attr('src', obj['picture']);
         }
     } else {
         $('.user_info').hide();
@@ -58,7 +63,6 @@ $('#signinButton').click(function () {
     function signInCallback(authResult) {
         var STATE = $('#signinButton').data('state')
         if (authResult['code']) {
-            $('.dropdown-menu').toggle();
             $.ajax({
                 type: 'POST',
                 url: '/gconnect?state=' + STATE,
@@ -67,12 +71,11 @@ $('#signinButton').click(function () {
                 },
                 contentType: 'application/octet-stream; charset=utf-8',
                 success: function (result) {
+                    console.log(result)
                     login_session = result['UserInfo'][0];
                     this.user_id = login_session['id']
                     document.cookie = "login_session=" + JSON.stringify(login_session);
                     window.location.href = '/categories/user/'+login_session['id']
-                    userInfoShowHide(true);
-                    
                 },
                 processData: false,
                 data: authResult['code']

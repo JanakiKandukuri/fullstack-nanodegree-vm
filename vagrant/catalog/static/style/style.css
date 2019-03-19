@@ -333,7 +333,8 @@ a {
 }
 
 .action-text {
-    color: #666666
+    color: #666666;
+    font-size: 22px;
 }
 
 .catalog {

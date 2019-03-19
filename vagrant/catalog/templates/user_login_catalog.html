@@ -57,10 +57,6 @@
                                                     data-id="{{c.id}}">{{c.name}}<br></a>
                                             </td>
                                             <td class="td-action">
-                                                <!-- <span class="edit_catalog" data-id="{{c.id}}">
-                                                    <i class="glyphicon glyphicon-edit action-glyph"></i>
-                                                    <span class="ml-10 action-text">EDIT</span>
-                                                </span> -->
                                                 <span class="edit_catalog" data-id="{{c.id}}">
                                                     <i class="glyphicon glyphicon-edit action-glyph"></i>
                                                     <a href="{{url_for('editCatalog', user_id=catalog.user_id, catalog_id=c.id)}}"
