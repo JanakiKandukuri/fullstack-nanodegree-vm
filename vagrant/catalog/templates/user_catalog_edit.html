@@ -11,13 +11,13 @@
 <body>
     <div class="container-fluid">
         {% extends "main.html" %}
-        {% block content %} 
+        {% block content %}
         <div class="contTop">
             <div class="container-fluid">
-                <div class="row">
+                <div class="row mb-14">
                     <div class="col-sm-1">
-                        <a href="{{url_for('userCatalog', user_id=catalog_edit.user_id)}}" class="btn btn-primary login_home_btn"
-                            role="button">Home</a>
+                        <a href="{{url_for('userCatalog', user_id=catalog_edit.user_id)}}"
+                            class="btn btn-primary login_home_btn" role="button">Home</a>
                     </div>
                 </div>
                 <div class="row">
@@ -41,18 +41,20 @@
                     <div class="button_style add_btn">
                         <input type="button" class="btn btn-primary newCat_Add_btn" value="Add New" />
                     </div>
+                    <div class="button_style edit_catalog">
+                        <input type="button" class="btn btn-primary newCat_saveall_items" value="Save" />
+                    </div>
                 </div>
                 <div class="row items_form">
                     {% for c in catalog_edit.catalogItems %}
                     <div class="sport_item">
                         <label class="input_label">Equipment Name:</label><input type="text" name="equipment_name"
-                            class="equipment_name ml-10" value="{{c.name}}"/>
+                            class="equipment_name ml-10" value="{{c.name}}" />
                         <label class="input_label ml-10">Description:</label>
-                        <textarea name="description" rows="2" cols="20" class="description ml-10" value="{{c.description}}"></textarea>
+                        <textarea name="description" rows="2" cols="20" class="description ml-10"
+                            value="{{c.description}}"></textarea>
                         <a href="javascript:void(0)" class="removeCatalogItem">X<br></a></div>
                     {% endfor %}
-                </div><div class="button_style edit_catalog">
-                    <input type="button" class="btn btn-primary newCat_saveall_items" value="Save" />
                 </div>
             </div>
             {% endif %}
