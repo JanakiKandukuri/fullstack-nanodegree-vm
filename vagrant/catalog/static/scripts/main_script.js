@@ -28,7 +28,6 @@ $(document).ready(function () {
     /** **DOCUMENT READY ACTIONS ** */
   $('.loading-container').hide();
     $('#myList').addClass('active');
-    console.log(document.cookie)
     var cookie = document.cookie.split(";");
     var login_obj = cookie.filter(function(c){
        return c && c.includes("login_session") ? c : null
@@ -64,9 +63,10 @@ $('#signinButton').click(function () {
     function signInCallback(authResult) {
         var STATE = $('#signinButton').data('state')
         if (authResult['code']) {
+            $('.loading-container').show();
             $.ajax({
                 processData: false,
-                data: authResult['code']
+                data: authResult['code'],
                 type: 'post',
                 url: '/gconnect?state=' + STATE,
                 headers: {
@@ -216,7 +216,7 @@ $('.newCat_create_btn').click(function () {
 /** ********************** ON ADD BUTTON CLICK ENABLE SAVEALL AND FORM FOR EQUIPMENTS **************** */
 $('.newCat_Add_btn').click(function () {
     $('.saveall_items').show()
-    newChild = '<div class="sport_item"><label class="input_label">Equipment Name:</label><input type="text" name="equipment_name" class="equipment_name ml-10" /><label class="input_label ml-17">Description:</label><textarea name="description" rows="2" cols="20" class="description ml-10" value="{{c.description}}"></textarea><a href="javascript:void(0)" class="removeCatalogItem">X<br></a></div>'
+    newChild = '<div class="row items_form_rows sport_item"><label class="input_label">Equipment Name:</label><input type="text" name="equipment_name" class="equipment_name ml-10" /><label class="input_label ml-17">Description:</label><textarea name="description" rows="2" cols="20" class="description ml-10" value="{{c.description}}"></textarea><a href="javascript:void(0)" class="removeCatalogItem">X<br></a></div>'
     $('.items_form').append(newChild)
 })
 

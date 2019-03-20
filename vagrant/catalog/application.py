@@ -183,6 +183,7 @@ def userCatalog(user_id):
     return render_template('user_login_catalog.html', catalog=catalog)
 
 
+#Create new catalog or view catalog
 @app.route('/categories/user/<int:user_id>/create', methods=['GET', 'POST'])
 def createCatalog(user_id):
     if(user_id):
@@ -193,17 +194,16 @@ def createCatalog(user_id):
                                  user_id=user_id)
                 session.add(newCat)
                 session.flush()
-                session.refresh(newCat)
-                flash('New Sport added to Catalog')
+                print("created")
                 message = {"name": request.form['sport_name'], "id": newCat.id}
-                return render_template('new_catalog.html', message=message)
+                return render_template('new_catalog.html', message=message, user_id=user_id)
         else:
-            create = {'user_id': user_id}
-            return render_template('new_catalog.html', catalog_new=create)
+            return render_template('new_catalog.html', user_id=user_id)
     else:
         return redirect('/')
 
 
+#edit catalog
 @app.route('/categories/user/<int:user_id>/category/<int:catalog_id>',
            methods=['GET', 'POST'])
 def editCatalog(user_id, catalog_id):
@@ -217,6 +217,7 @@ def editCatalog(user_id, catalog_id):
         return render_template('user_catalog_edit.html', catalog_edit=edit)
 
 
+#delete catalog
 @app.route('/categories/user/<int:user_id>/category/<int:catalog_id>/delete',
            methods=['POST'])
 def deleteCatalog(user_id, catalog_id):
@@ -226,6 +227,22 @@ def deleteCatalog(user_id, catalog_id):
         session.commit()
         return redirect(url_for('userCatalog',user_id=user_id))
 
+
+#add new items to catalog
+@app.route('/categories/user/<int:user_id>/category/<int:catalog_id>/items',
+           methods=['POST'])
+def newCatalogItems(user_id, catalog_id):
+    if (request.method == 'POST'):
+        print(request.data)
+        # newCat = Catalog(name=request.form['sport_name'],
+        #                 user_id=user_id)
+        # session.add(newCat)
+        # session.flush()
+        # print("created")
+        # message = {"name": request.form['sport_name'], "id": newCat.id}
+        # return render_template('new_catalog.html', message=message, user_id=user_id)
+    else:
+        return render_template('new_catalog.html', user_id=user_id)
 
 # helper functions for users
 def createUser(login_session):

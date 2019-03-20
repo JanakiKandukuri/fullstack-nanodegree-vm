@@ -16,7 +16,7 @@
             <div class="container-fluid">
                 <div class="row mt-20 ">
                     <div class="col-sm-1">
-                            <a href="{{url_for('userCatalog', user_id=catalog_new.user_id)}}" class="btn btn-primary login_home_btn mt-0 mb-25" role="button">Home</a>
+                            <a href="{{url_for('userCatalog', user_id=user_id)}}" class="btn btn-primary login_home_btn mt-0 mb-25" role="button">Home</a>
                     </div>   
                 </div>
                 <div class="row">
@@ -41,7 +41,7 @@
             </div>
             {% else %}
             <div class="row">
-                <form action="{{url_for('createCatalog', user_id=catalog_new.user_id)}}" method="POST">
+                <form action="{{url_for('createCatalog', user_id=user_id)}}" method="POST">
                         <label class="input_label">Sport Name:</label>
                     <input type="text" name="sport_name" class="sport_name" />
                     <input type="submit" class="btn btn-primary newCat_create_btn" value="Create" />
@@ -59,7 +59,7 @@
                         <input type="button" class="btn btn-primary newCat_saveall_items"  value="Save All" />
                     </div>
                 </div>
-                <div class="row items_form">
+                <div class="col-sm-12 items_form">
                 </div>
 
             </div>
