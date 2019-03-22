@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 from flask import Flask, render_template, request
 from flask import redirect, url_for, flash, jsonify
 from sqlalchemy import create_engine
@@ -129,6 +130,8 @@ def gdisconnect():
         del login_session['picture']
         response = make_response(json.dumps('Sucessfully disconnected'), 200)
         response.headers['Content-Type'] = 'application/json'
+        response = make_response(redirect(url_for('categories')))
+        response.delete_cookie('login_session')
         return response
     else:
         response = make_response(
@@ -194,6 +197,7 @@ def createCatalog(user_id):
                                  user_id=user_id)
                 session.add(newCat)
                 session.flush()
+                session.commit()
                 print("created")
                 message = {"name": request.form['sport_name'], "id": newCat.id}
                 return render_template('new_catalog.html', message=message, user_id=user_id)
@@ -210,11 +214,20 @@ def editCatalog(user_id, catalog_id):
     catalog = session.query(Catalog).filter_by(id=catalog_id).one()
     catalogItems = session.query(
                     CatalogItem).filter_by(
-                        catalog_id=catalog_id).all()
+                        catalog_id=catalog_id,
+                        user_id=user_id).all()
     edit = {'catalog': catalog, 'catalogItems': catalogItems,
             'user_id': user_id}
+    for c in catalogItems:
+        print(c.name)
+        print(c.description)
     if (request.method == 'GET'):
         return render_template('user_catalog_edit.html', catalog_edit=edit)
+    elif(request.method == 'POST'):
+        result = request.form.getlist['equipment_name']
+        print(result)
+        return ""
+
 
 
 #delete catalog
@@ -233,16 +246,18 @@ def deleteCatalog(user_id, catalog_id):
            methods=['POST'])
 def newCatalogItems(user_id, catalog_id):
     if (request.method == 'POST'):
-        print(request.data)
-        # newCat = Catalog(name=request.form['sport_name'],
-        #                 user_id=user_id)
-        # session.add(newCat)
-        # session.flush()
-        # print("created")
-        # message = {"name": request.form['sport_name'], "id": newCat.id}
-        # return render_template('new_catalog.html', message=message, user_id=user_id)
-    else:
-        return render_template('new_catalog.html', user_id=user_id)
+        data = json.loads(request.data)
+        if(data):
+            for d in list(data):
+                newCatItem = CatalogItem(name=d['name'], description=d['description'],
+                                         user_id=user_id,catalog_id=catalog_id)
+                session.add(newCatItem)
+                session.flush()
+                session.commit()
+                print("created")
+            return '/categories/user/'+str(user_id)
+        else:
+            return render_template('/')
 
 # helper functions for users
 def createUser(login_session):

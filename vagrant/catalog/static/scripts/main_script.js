@@ -91,28 +91,6 @@ $('#signinButton').click(function () {
     auth2.grantOfflineAccess().then(signInCallback);
 });
 
-/** **METHOD: SIGNOUT BUTTON CLICK
-   * **DESC: IN USERS PAGES, CLICK SIGNOUT BTN TO NAVIGATE TO MAIN PAGE */
-$('#signOut').click(function () {
-    $.ajax({
-        type: "get",
-        url: '/gdisconnect',
-        processData: false,
-        contentType: 'application/octet-stream; charset=utf-8',
-        success: function (result) {
-            if (result) {
-                login_session = null;
-                document.cookie = "login_session=;expires=Thu, 01 Jan 1970 00:00:01 GMT;"
-                userInfoShowHide(false)
-            } else if (authResult['error']) {
-                console.log("error")
-            } else {
-                $('#reuslt').html('failed .....')
-            }
-        }
-    })
-})
-
 
 /** **METHOD: MYLIST BUTTON CLICK
    * **DESC: IN USERS MAIN PAGE, CLICK MYLIST BTN TO VIEW USERS LIST OF CATALOG */
@@ -159,22 +137,6 @@ $('.delete_catalog').click(function () {
                 console.log(xhr)
             }
         });
-    });
-})
-
-/** **METHOD: EDIT BUTTON CLICK
- * **DESC: IN USERS MAIN PAGE, CLICK EDIT BTN TO VIEW EDIT AN ENTRY FROM CATALOG */
-$('.edit_catalog').click(function () {
-    var id = $(this).data("id");
-    $.ajax({
-        url: "/user_catalog/" + id + "/edit",
-        type: "get",
-        success: function (response) {
-            console.log(response)
-        },
-        error: function (xhr) {
-            console.log(xhr)
-        }
     });
 })
 
@@ -229,6 +191,7 @@ $(document).on("click", ".removeCatalogItem", function () {
 /** ********************** ON SAVE ALL SAVE ALL EQUIPMENTS AND NAVIGATE TO USER HOME PAGE **************** */
 $('.newCat_saveall_items').click(function () {
     var id = $('.sport_name').data("id");
+    var user_id = window.location.href.split("user/")[1][0]
     var equipment_names = [];
     var descriptions = [];
     var items = [];
@@ -239,18 +202,20 @@ $('.newCat_saveall_items').click(function () {
         descriptions.push(($(this).val()));
     });
     for (var i = 0; i < equipment_names.length; i++) {
-        items.push([equipment_names[i], descriptions[i]])
+        items.push({name: equipment_names[i], description: descriptions[i]})
     }
-    console.log(items)
+    $('.loading-container').show();
     $.ajax({
         type: "post",
-        url: '/user_catalog/' + id + '/newItem',
+        url: '/categories/user/'+user_id +'/category/'+id+'/items',
         processData: false,
         data: JSON.stringify(items),
         contentType: 'application/octet-stream; charset=utf-8',
         success: function (result) {
             if (result) {
-                window.location.href = result
+                console.log(result)
+                window.location.href = result;
+                $('.loading-container').hide();
             } else {
                 $('#reuslt').html('failed .....')
             }
