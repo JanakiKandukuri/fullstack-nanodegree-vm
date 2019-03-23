@@ -33,6 +33,23 @@ session = DBSession()
 metadata = MetaData()
 session.commit()
 
+
+# API END POINTS
+@app.route('/JSON')
+@app.route('/categories/JSON')
+def catalogJSON():
+    catalog = session.query(Catalog).all()
+    all_cat = []
+    for c in catalog:
+        catalogItem = session.query(
+                       CatalogItem).filter_by(catalog_id=c.id).all()
+        all_cat.append({"id": c.id,
+                        "name": c.name,
+                        "submenu": [r.serialize for r in catalogItem]})
+    return jsonify(all_cat)
+
+
+# ROUTES TO RENDER HTML PAGES
 # google sign in route
 @app.route('/gconnect', methods=['POST'])
 def gconnect():
@@ -154,9 +171,6 @@ def categories():
     else:
         catalog = session.query(Catalog).all()
         items = session.query(CatalogItem).all()
-        for c in catalog:
-            print(c.name)
-            print(c.user_id)
         state = ''.join(
                     random.choice(string.ascii_uppercase +
                                   string.digits)for x in range(32))
