@@ -178,17 +178,21 @@ header {
 
 #signOutButton {
     margin-left: 20px;
-    display: none
+    display: none;
+    position: absolute;
+    top: 9px;
+    right: 10px;
 }
 
 #signOutButton #signOut {
-    height: 30px;
+    /* height: 30px;
     font-weight: 700;
     font-size: 14px;
     width: 100px;
     position: relative;
     top: -40px;
-    left: 100px;
+    right: -100px; */
+    /* left: 100px; */
 }
 
 .log-out_glyph_settings_gear i {

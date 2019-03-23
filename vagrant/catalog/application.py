@@ -182,11 +182,12 @@ def categoryItem(category_id):
 def userCatalog(user_id):
     user_catalog = session.query(Catalog).filter_by(user_id=user_id).all()
     all_catalog = session.query(Catalog).all()
-    catalog = {'userCatalog': user_catalog, 'user_id': user_id, 'all': all_catalog}
+    catalog = {'userCatalog': user_catalog,
+               'user_id': user_id, 'all': all_catalog}
     return render_template('user_login_catalog.html', catalog=catalog)
 
 
-#Create new catalog or view catalog
+# Create new catalog or view catalog
 @app.route('/categories/user/<int:user_id>/create', methods=['GET', 'POST'])
 def createCatalog(user_id):
     if(user_id):
@@ -198,16 +199,16 @@ def createCatalog(user_id):
                 session.add(newCat)
                 session.flush()
                 session.commit()
-                print("created")
                 message = {"name": request.form['sport_name'], "id": newCat.id}
-                return render_template('new_catalog.html', message=message, user_id=user_id)
+                return render_template('new_catalog.html',
+                                       message=message, user_id=user_id)
         else:
             return render_template('new_catalog.html', user_id=user_id)
     else:
         return redirect('/')
 
 
-#edit catalog
+# edit catalog
 @app.route('/categories/user/<int:user_id>/category/<int:catalog_id>',
            methods=['GET', 'POST'])
 def editCatalog(user_id, catalog_id):
@@ -218,19 +219,31 @@ def editCatalog(user_id, catalog_id):
                         user_id=user_id).all()
     edit = {'catalog': catalog, 'catalogItems': catalogItems,
             'user_id': user_id}
-    for c in catalogItems:
-        print(c.name)
-        print(c.description)
     if (request.method == 'GET'):
         return render_template('user_catalog_edit.html', catalog_edit=edit)
     elif(request.method == 'POST'):
-        result = request.form.getlist['equipment_name']
-        print(result)
-        return ""
+        session.query(
+                      CatalogItem).filter_by(
+                        catalog_id=catalog_id,
+                        user_id=user_id).delete(synchronize_session=False)
+        session.commit()
+        equipment_name = request.form.getlist('equipment_name')
+        description = request.form.getlist('description')
+        sport_name = request.form['sport_name']
+        catalog.name = sport_name
+        session.add(catalog)
+        for index, name in enumerate(equipment_name):
+            eq_name = name
+            des_name = description[index] if description[index] else ""
+            newCatItem = CatalogItem(name=eq_name, description=des_name,
+                                     user_id=user_id, catalog_id=catalog_id)
+            session.add(newCatItem)
+            session.flush()
+            session.commit()
+        return redirect(url_for('userCatalog', user_id=user_id))
 
 
-
-#delete catalog
+# delete catalog
 @app.route('/categories/user/<int:user_id>/category/<int:catalog_id>/delete',
            methods=['POST'])
 def deleteCatalog(user_id, catalog_id):
@@ -238,10 +251,10 @@ def deleteCatalog(user_id, catalog_id):
     if (request.method == 'POST'):
         session.delete(deleteCat)
         session.commit()
-        return redirect(url_for('userCatalog',user_id=user_id))
+        return redirect(url_for('userCatalog', user_id=user_id))
 
 
-#add new items to catalog
+# add new items to catalog
 @app.route('/categories/user/<int:user_id>/category/<int:catalog_id>/items',
            methods=['POST'])
 def newCatalogItems(user_id, catalog_id):
@@ -249,8 +262,10 @@ def newCatalogItems(user_id, catalog_id):
         data = json.loads(request.data)
         if(data):
             for d in list(data):
-                newCatItem = CatalogItem(name=d['name'], description=d['description'],
-                                         user_id=user_id,catalog_id=catalog_id)
+                newCatItem = CatalogItem(name=d['name'],
+                                         description=d['description'],
+                                         user_id=user_id,
+                                         catalog_id=catalog_id)
                 session.add(newCatItem)
                 session.flush()
                 session.commit()
@@ -258,6 +273,7 @@ def newCatalogItems(user_id, catalog_id):
             return '/categories/user/'+str(user_id)
         else:
             return render_template('/')
+
 
 # helper functions for users
 def createUser(login_session):

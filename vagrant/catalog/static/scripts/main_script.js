@@ -142,6 +142,7 @@ $('.delete_catalog').click(function () {
 
 /** clicking on catalog a tag in container */
 $('.catalog').click(function () {
+    $('.loading-container').show();
     var id = $(this).data("id");
     $("#cat_items").html("");
     var cats = $('.catalog');
@@ -151,15 +152,15 @@ $('.catalog').click(function () {
         url: "/categories/" + id,
         type: "get",
         success: function (response) {
-            console.log(response)
             var str = "<ul>";
             for (var i = 0; i < response.CatalogItem.length; i++) {
-                str += "<li><h2 data-item_id=" + response.CatalogItem[i].id + " data-id=" + id +
-                    " class='item'>" + response.CatalogItem[i].name +
-                    "</h2>" + "<div class='description'>" + response.CatalogItem[i].description + "</div>"
+                str  += "<li><h2>"+response.CatalogItem[i].name +
+                        "</h2><h5>"+ response.CatalogItem[i].description
+                        +"</h5></li>"
             }
             str += "</ul>";
             $("#cat_items").html(str);
+            $('.loading-container').hide();
         },
         error: function (xhr) {
             console.log(xhr)
@@ -178,7 +179,7 @@ $('.newCat_create_btn').click(function () {
 /** ********************** ON ADD BUTTON CLICK ENABLE SAVEALL AND FORM FOR EQUIPMENTS **************** */
 $('.newCat_Add_btn').click(function () {
     $('.saveall_items').show()
-    newChild = '<div class="row items_form_rows sport_item"><label class="input_label">Equipment Name:</label><input type="text" name="equipment_name" class="equipment_name ml-10" /><label class="input_label ml-17">Description:</label><textarea name="description" rows="2" cols="20" class="description ml-10" value="{{c.description}}"></textarea><a href="javascript:void(0)" class="removeCatalogItem">X<br></a></div>'
+    newChild = '<div class="row items_form_rows sport_item"><label class="input_label">Equipment Name:</label><input type="text" name="equipment_name" class="equipment_name ml-10" /><label class="input_label ml-17">Description:</label><textarea name="description" rows="5" cols="50" class="description ml-10" value="{{c.description}}"></textarea><a href="javascript:void(0)" class="removeCatalogItem">X<br></a></div>'
     $('.items_form').append(newChild)
 })
 

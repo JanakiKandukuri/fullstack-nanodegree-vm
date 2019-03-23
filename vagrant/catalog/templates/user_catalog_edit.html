@@ -29,10 +29,10 @@
         </div>
         <div class="container-fluid create_form">
             {% if catalog_edit %}
-            <form action={{url_for('editCatalog', user_id=catalog_edit.user_id,catalog_id=catalog_edit.catalog.id)}} method="POST">
+            <form action="{{url_for('editCatalog', user_id=catalog_edit.user_id,catalog_id=catalog_edit.catalog.id)}}" method="POST">
                 <div class="row">
                     <label class="input_label">Sport Name:</label>
-                    <input type="text" name="sport_name" class="sport_name" id=" sport_name"
+                    <input type="text" name="sport_name" class="sport_name" id="sport_name"
                         data-id="{{catalog_edit.catalog.id}}" value="{{catalog_edit.catalog.name}}" />
                 </div>
                 <div class="row" id="cat_items">
@@ -42,8 +42,6 @@
                         </div>
                         <div class="button_style edit_catalog">
                             <input class="btn btn-primary save_items" type="submit" value="Save" />
-                            <!-- <a href="{{url_for('userCatalog', user_id=catalog_edit.user_id)}}"
-                            class="btn btn-primary newCat_saveall_items" role="button">Save</a> -->
                         </div>
                     </div>
                     <div class="col-sm-12 items_form">
@@ -52,9 +50,10 @@
                             <label class="input_label">Equipment Name:</label><input type="text" name="equipment_name"
                                 class="equipment_name ml-10" value="{{c.name}}" />
                             <label class="input_label ml-10">Description:</label>
-                            <textarea name="description" rows="2" cols="20" class="description ml-10"
+                            <textarea name="description" rows="5" cols="50" class="description ml-10"
                                 value="{{c.description}}">{{c.description}}</textarea>
-                            <a href="javascript:void(0)" class="removeCatalogItem">X<br></a></div>
+                            <a href="javascript:void(0)" class="removeCatalogItem">X<br></a>
+                        </div>
                         {% endfor %}
                     </div>
                 </div>

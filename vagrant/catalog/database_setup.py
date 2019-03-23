@@ -21,7 +21,7 @@ class UserInfo(Base):
             'name': self.name,
             'email': self.email,
             'id': self.id,
-            'picture' : self.picture
+            'picture': self.picture
         }
 
 
